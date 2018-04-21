@@ -28,7 +28,7 @@
     <ClCompile Include="..\..\source\lib\ffgl\FFGLShader.cpp" />
     <ClCompile Include="..\..\source\lib\ffgl\utilities\utilities.cpp" />
     <ClCompile Include="..\..\source\lib\glee\GLee.c" />
-    <ClCompile Include="..\..\source\plugins\FFGLDrip\FFGLDrip.cpp" />
+    <ClCompile Include="..\..\source\plugins\FFGLDrip A\FFGLDripA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\lib\ffgl\FFGL.h" />
@@ -42,10 +42,10 @@
     <ClInclude Include="..\..\source\lib\ffgl\FreeFrame.h" />
     <ClInclude Include="..\..\source\lib\ffgl\utilities\utilities.h" />
     <ClInclude Include="..\..\source\lib\glee\GLee.h" />
-    <ClInclude Include="..\..\source\plugins\FFGLDrip\FFGLDrip.h" />
+    <ClInclude Include="..\..\source\plugins\FFGLDrip A\FFGLDripA.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2B20A6A4-C2A4-4382-AA25-40B40C29614F}</ProjectGuid>
+    <ProjectGuid>{AC972FFA-F819-4B60-8C32-C34F00389EAC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -142,7 +142,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;..\..\source\lib\ffgl\utilities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\lib\ffgl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>FFGLPlugins.def</ModuleDefinitionFile>
