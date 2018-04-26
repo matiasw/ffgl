@@ -35,6 +35,9 @@ FFGLDripB::FFGLDripB()
 	// Parameters
 	SetParamInfo(FFPARAM_MixVal, "Mixer Value", FF_TYPE_STANDARD, 0.0f);
 	m_blend = 0.0f;
+
+	for (int i = 0; i < RESOLUTION; i++)
+		m_speeds[i] = random(1.0, 1.2);
 }
 
 FFGLDripB::~FFGLDripB()
@@ -44,8 +47,6 @@ FFGLDripB::~FFGLDripB()
 
 FFResult FFGLDripB::InitGL(const FFGLViewportStruct *vp)
 {
-	for (int i = 0; i < RESOLUTION; i++)
-		m_speeds[i] = random(1.0, 1.2);
     return FF_SUCCESS;
 }
 
@@ -69,6 +70,11 @@ FFResult FFGLDripB::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	FFGLTextureStruct &TextureA = *(pGL->inputTextures[0]);
 	FFGLTextureStruct &TextureB = *(pGL->inputTextures[1]);
 
+	//get the max s,t that correspond to the 
+	//width,height of the used portion of the allocated texture space
+	FFGLTexCoords maxCoordsA = GetMaxGLTexCoords(TextureA);
+	FFGLTexCoords maxCoordsB = GetMaxGLTexCoords(TextureB);
+
 	glEnable(GL_TEXTURE_2D);
 	
 	//source B
@@ -77,16 +83,16 @@ FFResult FFGLDripB::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	{
 		glBegin(GL_QUADS);
 		//lower left
-		glTexCoord2f(i*1.0 / RESOLUTION, 0.0);
+		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsB.s, 0.0);
 		glVertex2f(-1 + i * 2.0 / RESOLUTION, -1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//upper left
-		glTexCoord2f(i*1.0 / RESOLUTION, 1.0f);
+		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsB.s, 1.0f*maxCoordsB.t);
 		glVertex2f(-1 + i * 2.0 / RESOLUTION, 1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//upper right
-		glTexCoord2f((i + 1)*1.0 / RESOLUTION, 1.0f);
+		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsB.s, 1.0f*maxCoordsB.t);
 		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, 1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//lower right
-		glTexCoord2f((i + 1)*1.0 / RESOLUTION, 0.0);
+		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsB.s, 0.0);
 		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, -1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		glEnd();
 	}
@@ -98,16 +104,16 @@ FFResult FFGLDripB::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 	{
 		glBegin(GL_QUADS);
 		//lower left
-		glTexCoord2f(i*1.0 / RESOLUTION, 0.0);
+		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsA.s, 0.0);
 		glVertex2f(-1 + i * 2.0 / RESOLUTION, -1.0 + m_blend * 2.0*m_speeds[i]);
 		//upper left
-		glTexCoord2f(i*1.0 / RESOLUTION, 1.0f);
+		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsA.s, 1.0f*maxCoordsA.t);
 		glVertex2f(-1 + i * 2.0 / RESOLUTION, 1.0 + m_blend * 2.0*m_speeds[i]);
 		//upper right
-		glTexCoord2f((i + 1)*1.0 / RESOLUTION, 1.0f);
+		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsA.s, 1.0f*maxCoordsA.t);
 		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, 1.0 + m_blend * 2.0*m_speeds[i]);
 		//lower right
-		glTexCoord2f((i + 1)*1.0 / RESOLUTION, 0.0);
+		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsA.s, 0.0);
 		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, -1.0 + m_blend * 2.0*m_speeds[i]);
 		glEnd();
 	}
