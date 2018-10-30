@@ -1,8 +1,10 @@
+#include <algorithm>
+
 #include <FFGL.h>
 #include <FFGLLib.h>
 
 #include "FFGLDripB.h"
-#include "../../lib/ffgl/utilities/utilities.h"
+#include "../../lib/ffglex/FFGLUtilities.h"
 
 #define FFPARAM_MixVal  (0)
 
@@ -37,7 +39,7 @@ FFGLDripB::FFGLDripB()
 	m_blend = 0.0f;
 
 	for (int i = 0; i < RESOLUTION; i++)
-		m_speeds[i] = random(1.0, 1.2);
+		m_speeds[i] = ffglex::random(1.0, 1.2);
 }
 
 FFGLDripB::~FFGLDripB()
@@ -84,16 +86,16 @@ FFResult FFGLDripB::ProcessOpenGL(ProcessOpenGLStruct *pGL)
 		glBegin(GL_QUADS);
 		//lower left
 		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsB.s, 0.0);
-		glVertex2f(-1 + i * 2.0 / RESOLUTION, -1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
+		glVertex2f(-1 + i * 2.0 / RESOLUTION, -1.0 + std::min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//upper left
 		glTexCoord2f(i*1.0 / RESOLUTION*maxCoordsB.s, 1.0f*maxCoordsB.t);
-		glVertex2f(-1 + i * 2.0 / RESOLUTION, 1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
+		glVertex2f(-1 + i * 2.0 / RESOLUTION, 1.0 + std::min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//upper right
 		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsB.s, 1.0f*maxCoordsB.t);
-		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, 1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
+		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, 1.0 + std::min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		//lower right
 		glTexCoord2f((i + 1)*1.0 / RESOLUTION*maxCoordsB.s, 0.0);
-		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, -1.0 + min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
+		glVertex2f(-1 + (i + 1)*2.0 / RESOLUTION, -1.0 + std::min(2.0, m_blend * 2.0*m_speeds[i]) - 2.0);
 		glEnd();
 	}
 	

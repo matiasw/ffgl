@@ -2,7 +2,7 @@
 #include <FFGLLib.h>
 
 #include "FFGLDripA.h"
-#include "../../lib/ffgl/utilities/utilities.h"
+#include "../../lib/ffglex/FFGLUtilities.h"
 
 #define FFPARAM_MixVal  (0)
 
@@ -37,7 +37,7 @@ FFGLDripA::FFGLDripA()
 	m_blend = 0.0f;
 
 	for (int i = 0; i < RESOLUTION; i++)
-		m_speeds[i] = random(1.0, 1.2);
+		m_speeds[i] = ffglex::random(1.0, 1.2);
 }
 
 FFGLDripA::~FFGLDripA()
